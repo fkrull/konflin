@@ -44,3 +44,5 @@ task runMocha(type: NodeTask, dependsOn: [compileTestKotlin2Js, populateNodeModu
 }
 
 test.dependsOn runMocha
+
+assemble.dependsOn installMocha, populateNodeModules

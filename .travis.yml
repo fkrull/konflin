@@ -1,0 +1,2 @@
+language: java
+script: ./gradlew konflin-jvm:test konflin-js:test
