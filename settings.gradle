@@ -1,3 +1,6 @@
 rootProject.name = 'konflin'
 include 'common'
 findProject(':common')?.name = 'konflin-common'
+include 'jvm'
+findProject(':jvm')?.name = 'konflin-jvm'
+
