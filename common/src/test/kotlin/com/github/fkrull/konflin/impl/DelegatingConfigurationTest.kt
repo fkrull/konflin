@@ -8,21 +8,21 @@ class DelegatingConfigurationTest {
     private val configuration = DelegatingConfiguration(configurationSource)
 
     @Test
-    fun `get should return value from Setting`() {
+    fun get_should_return_value_from_Setting() {
         val setting = givenSettingWith(15, null)
 
         assertEquals(15, configuration[setting])
     }
 
     @Test
-    fun `get should return default value from Setting if no value from config`() {
+    fun get_should_return_default_value_from_Setting_if_no_value_from_config() {
         val setting = givenSettingWith(null, 15)
 
         assertEquals(15, configuration[setting])
     }
 
     @Test
-    fun `get should throw exception if no config value and no default`() {
+    fun get_should_throw_exception_if_no_config_value_and_no_default() {
         val setting = givenSettingWith(null, null)
 
         assertFailsWith(MissingConfigValueException::class) {
@@ -31,21 +31,21 @@ class DelegatingConfigurationTest {
     }
 
     @Test
-    fun `contains should return true if Setting returns a value`() {
+    fun contains_should_return_true_if_Setting_returns_a_value() {
         val setting = givenSettingWith(15, null)
 
         assertTrue(setting in configuration)
     }
 
     @Test
-    fun `contains should return true if Setting has no value but a default`() {
+    fun contains_should_return_true_if_Setting_has_no_value_but_a_default() {
         val setting = givenSettingWith(null, 15)
 
         assertTrue(setting in configuration)
     }
 
     @Test
-    fun `contains should return false if Setting has no value and no default`() {
+    fun contains_should_return_false_if_Setting_has_no_value_and_no_default() {
         val setting = givenSettingWith(null, null)
 
         assertFalse(setting in configuration)

@@ -7,7 +7,7 @@ class IntegrationTest {
     private val configSource = mockk<ConfigurationSource>()
 
     @Test
-    fun `should define config spec and get values from config source`() {
+    fun should_define_config_spec_and_get_values_from_config_source() {
         val test = object: ConfigSpec {
             val name = setting<String>("test.name")
             val port = setting("test.port", 8080)

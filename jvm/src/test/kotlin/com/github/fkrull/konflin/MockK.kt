@@ -1,3 +1,5 @@
+@file:Suppress("NOTHING_TO_INLINE")
+
 package com.github.fkrull.konflin
 
 import io.mockk.MockKMatcherScope

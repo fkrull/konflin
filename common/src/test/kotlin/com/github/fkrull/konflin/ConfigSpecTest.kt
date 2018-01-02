@@ -9,7 +9,7 @@ class ConfigSpecTest {
     private val configSource = mockk<ConfigurationSource>()
 
     @Test
-    fun `should create Setting for String`() {
+    fun should_create_Setting_for_String() {
         every { configSource.getString("test.name") } returns "test value"
 
         val setting = configSpec.setting("test.name", "test default")
@@ -20,7 +20,7 @@ class ConfigSpecTest {
     }
 
     @Test
-    fun `should create Setting for Int`() {
+    fun should_create_Setting_for_Int() {
         every { configSource.getInt("test.name") } returns 8080
 
         val setting = configSpec.setting("test.name", 80)
@@ -31,7 +31,7 @@ class ConfigSpecTest {
     }
 
     @Test
-    fun `should create Setting for Boolean`() {
+    fun should_create_Setting_for_Boolean() {
         every { configSource.getBoolean("test.name") } returns true
 
         val setting = configSpec.setting("test.name", true)
@@ -42,7 +42,7 @@ class ConfigSpecTest {
     }
 
     @Test
-    fun `should throw exception for unsupported type`() {
+    fun should_throw_exception_for_unsupported_type() {
         assertFailsWith(UnsupportedConfigTypeException::class) {
             configSpec.setting<Throwable>("test.name")
         }
