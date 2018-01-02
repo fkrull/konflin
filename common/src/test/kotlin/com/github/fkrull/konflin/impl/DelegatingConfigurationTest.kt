@@ -1,10 +1,13 @@
 package com.github.fkrull.konflin.impl
 
-import com.github.fkrull.konflin.*
+import com.github.fkrull.konflin.ConfigurationSource
+import com.github.fkrull.konflin.MissingConfigValueException
+import com.github.fkrull.konflin.MockConfigurationSource
+import com.github.fkrull.konflin.Setting
 import kotlin.test.*
 
 class DelegatingConfigurationTest {
-    private val configurationSource = mockk<ConfigurationSource>()
+    private val configurationSource = MockConfigurationSource()
     private val configuration = DelegatingConfiguration(configurationSource)
 
     @Test
@@ -51,11 +54,17 @@ class DelegatingConfigurationTest {
         assertFalse(setting in configuration)
     }
 
-    private fun <T> givenSettingWith(value: T?, default: T?): Setting<*> {
-        val setting = mockk<Setting<T>>()
+    private fun <T> givenSettingWith(value: T?, default: T?): Setting<*> = object: Setting<T> {
+        override val name: String
+            get() = "test setting"
+        override val default: T?
+            get() = default
+        override fun get(configSource: ConfigurationSource) = value
+
+        /*val setting = mockk<Setting<T>>()
         every { setting.name } returns "test setting"
         every { setting.get(configurationSource) } returns value
         every { setting.default } returns default
-        return setting
+        return setting*/
     }
 }

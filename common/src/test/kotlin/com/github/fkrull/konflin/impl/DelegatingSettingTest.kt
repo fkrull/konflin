@@ -1,12 +1,11 @@
 package com.github.fkrull.konflin.impl
 
-import com.github.fkrull.konflin.ConfigurationSource
-import com.github.fkrull.konflin.mockk
+import com.github.fkrull.konflin.MockConfigurationSource
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class DelegatingSettingTest {
-    private val configurationSource = mockk<ConfigurationSource>()
+    private val configurationSource = MockConfigurationSource()
 
     @Test
     fun should_get_default_value_from_getter_function() {

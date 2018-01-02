@@ -6,11 +6,11 @@ import kotlin.test.assertFailsWith
 
 class ConfigSpecTest {
     private val configSpec = object : ConfigSpec {}
-    private val configSource = mockk<ConfigurationSource>()
+    private val configSource = MockConfigurationSource()
 
     @Test
     fun should_create_Setting_for_String() {
-        every { configSource.getString("test.name") } returns "test value"
+        configSource.setString("test.name", "test value")
 
         val setting = configSpec.setting("test.name", "test default")
 
@@ -21,7 +21,7 @@ class ConfigSpecTest {
 
     @Test
     fun should_create_Setting_for_Int() {
-        every { configSource.getInt("test.name") } returns 8080
+        configSource.setInt("test.name", 8080)
 
         val setting = configSpec.setting("test.name", 80)
 
@@ -32,7 +32,7 @@ class ConfigSpecTest {
 
     @Test
     fun should_create_Setting_for_Boolean() {
-        every { configSource.getBoolean("test.name") } returns true
+        configSource.setBoolean("test.name", true)
 
         val setting = configSpec.setting("test.name", true)
 
