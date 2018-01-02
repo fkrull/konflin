@@ -3,4 +3,6 @@ include 'common'
 findProject(':common')?.name = 'konflin-common'
 include 'jvm'
 findProject(':jvm')?.name = 'konflin-jvm'
+include 'js'
+findProject(':js')?.name = 'konflin-js'
 
