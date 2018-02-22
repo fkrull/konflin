@@ -101,4 +101,14 @@ class IntegrationTest {
 
         assertFalse(test.name in config)
     }
+
+    @Test
+    fun should_throw_exception_when_trying_to_create_setting_with_unsupported_type() {
+        assertFailsWith(UnsupportedConfigTypeException::class) {
+            object: ConfigSpec {
+                @Suppress("unused")
+                val any = setting<Any>("test.any")
+            }
+        }
+    }
 }
