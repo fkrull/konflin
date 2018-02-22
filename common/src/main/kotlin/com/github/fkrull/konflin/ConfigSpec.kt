@@ -1,11 +1,12 @@
 package com.github.fkrull.konflin
 
 import com.github.fkrull.konflin.impl.DelegatingSetting
+import kotlin.reflect.KClass
 
 interface ConfigSpec {
     @Suppress("UNCHECKED_CAST")
     fun <T : Any> setting(
-        type: kotlin.reflect.KClass<T>,
+        type: KClass<T>,
         name: String,
         defaultValue: T? = null
     ): Setting<T> = when (type) {
@@ -16,4 +17,5 @@ interface ConfigSpec {
     } as Setting<T>
 }
 
-inline fun <reified T: Any> ConfigSpec.setting(name: String, defaultValue: T? = null): Setting<T> = setting(T::class, name, defaultValue)
+inline fun <reified T: Any> ConfigSpec.setting(name: String, defaultValue: T? = null): Setting<T>
+    = setting(T::class, name, defaultValue)
