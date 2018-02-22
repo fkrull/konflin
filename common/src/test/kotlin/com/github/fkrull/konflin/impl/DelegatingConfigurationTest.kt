@@ -60,11 +60,5 @@ class DelegatingConfigurationTest {
         override val default: T?
             get() = default
         override fun get(configSource: ConfigurationSource) = value
-
-        /*val setting = mockk<Setting<T>>()
-        every { setting.name } returns "test setting"
-        every { setting.get(configurationSource) } returns value
-        every { setting.default } returns default
-        return setting*/
     }
 }
