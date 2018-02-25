@@ -1,18 +1,20 @@
 package com.github.fkrull.konflin
 
-import com.github.fkrull.konflin.impl.DelegatingSetting
+import com.github.fkrull.konflin.impl.ConverterBasedSetting
+import com.github.fkrull.konflin.typedescriptors.ConfigType
+import com.github.fkrull.konflin.typedescriptors.IdentityTypeDescriptor
 import kotlin.reflect.KClass
 
 interface ConfigSpec {
-    @Suppress("UNCHECKED_CAST")
+    @Suppress("RemoveExplicitTypeArguments", "UNCHECKED_CAST")
     fun <T : Any> setting(
         type: KClass<T>,
         name: String,
         defaultValue: T? = null
     ): Setting<T> = when (type) {
-        String::class -> DelegatingSetting(name, { it.getString(name) }, { defaultValue })
-        Int::class -> DelegatingSetting(name, { it.getInt(name) }, { defaultValue })
-        Boolean::class -> DelegatingSetting(name, { it.getBoolean(name) }, { defaultValue })
+        String::class -> ConverterBasedSetting<String>(name, defaultValue as String?, IdentityTypeDescriptor(ConfigType.Types.String))
+        Int::class -> ConverterBasedSetting<Int>(name, defaultValue as Int?, IdentityTypeDescriptor(ConfigType.Types.Int))
+        Boolean::class -> ConverterBasedSetting<Boolean>(name, defaultValue as Boolean?, IdentityTypeDescriptor(ConfigType.Types.Boolean))
         else -> throw UnsupportedConfigTypeException("cannot use '$type' as config type")
     } as Setting<T>
 }
