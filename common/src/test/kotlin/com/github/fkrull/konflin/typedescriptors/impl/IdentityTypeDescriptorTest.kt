@@ -1,5 +1,6 @@
-package com.github.fkrull.konflin.typedescriptors
+package com.github.fkrull.konflin.typedescriptors.impl
 
+import com.github.fkrull.konflin.typedescriptors.ConfigType
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

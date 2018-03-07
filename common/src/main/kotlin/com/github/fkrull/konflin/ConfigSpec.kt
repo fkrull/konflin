@@ -2,7 +2,7 @@ package com.github.fkrull.konflin
 
 import com.github.fkrull.konflin.impl.ConverterBasedSetting
 import com.github.fkrull.konflin.typedescriptors.ConfigType
-import com.github.fkrull.konflin.typedescriptors.IdentityTypeDescriptor
+import com.github.fkrull.konflin.typedescriptors.impl.IdentityTypeDescriptor
 import kotlin.reflect.KClass
 
 interface ConfigSpec {
