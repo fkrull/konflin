@@ -20,9 +20,9 @@ private class MockConverter<SourceType : Any>(
 
 class ConverterBasedSettingTest {
     private val configSource = MockConfigurationSource()
-    private val stringConverter = MockConverter("test value", "converted value", ConfigType.Types.String)
-    private val intConverter = MockConverter(99, "converted value", ConfigType.Types.Int)
-    private val booleanConverter = MockConverter(true, "converted value", ConfigType.Types.Boolean)
+    private val stringConverter: Converter<String, Any> = MockConverter("test value", "converted value", ConfigType.Types.String)
+    private val intConverter: Converter<String, Any> = MockConverter(99, "converted value", ConfigType.Types.Int)
+    private val booleanConverter: Converter<String, Any> = MockConverter(true, "converted value", ConfigType.Types.Boolean)
 
     init {
         configSource.setString("test.setting", "test value")
