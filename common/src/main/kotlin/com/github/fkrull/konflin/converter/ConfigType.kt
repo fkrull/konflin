@@ -1,4 +1,4 @@
-package com.github.fkrull.konflin.typedescriptors
+package com.github.fkrull.konflin.converter
 
 import kotlin.reflect.KClass
 

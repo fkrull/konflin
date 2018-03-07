@@ -1,8 +1,8 @@
-package com.github.fkrull.konflin.typedescriptors
+package com.github.fkrull.konflin.converter
 
 import kotlin.reflect.KClass
 
-internal interface TypeDescriptor<out Type : Any, SourceType : Any> {
+internal interface Converter<out Type : Any, SourceType : Any> {
     val configType: ConfigType<SourceType>
     val clazz: KClass<out Type>
 

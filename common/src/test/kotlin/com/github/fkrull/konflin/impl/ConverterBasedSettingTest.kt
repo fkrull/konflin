@@ -1,8 +1,8 @@
 package com.github.fkrull.konflin.impl
 
 import com.github.fkrull.konflin.MockConfigurationSource
-import com.github.fkrull.konflin.typedescriptors.ConfigType
-import com.github.fkrull.konflin.typedescriptors.TypeDescriptor
+import com.github.fkrull.konflin.converter.ConfigType
+import com.github.fkrull.konflin.converter.Converter
 import kotlin.reflect.KClass
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -11,7 +11,7 @@ private class MockConverter<SourceType : Any>(
     val expectedInput: SourceType,
     val output: String,
     override val configType: ConfigType<SourceType>
-) : TypeDescriptor<String, SourceType> {
+) : Converter<String, SourceType> {
     override val clazz: KClass<String> = String::class
 
     override fun fromConfig(value: SourceType): String =
