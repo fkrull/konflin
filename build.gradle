@@ -2,7 +2,7 @@ allprojects {
     group 'com.github.fkrull.konflin'
     version '1.0.0-SNAPSHOT'
 
-    ext.kotlin_version = '1.2.21'
+    ext.kotlin_version = '1.2.30'
     ext.dokka_version = '0.9.16'
     ext.docs_dir = "$rootDir/build/doc"
 
