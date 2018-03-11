@@ -10,7 +10,7 @@ internal class ConverterBasedSetting<out T : Any>(
     override val default: T?,
     private val converter: Converter<T, Any>
 ) : Setting<T> {
-    override fun get(configSource: ConfigurationSource): T? = when (converter.configType) {
+    override fun get(configSource: ConfigurationSource): T? = when (converter.inType) {
         ConfigType.Types.String -> configSource.getString(name)?.let { converter.fromConfig(it) }
         ConfigType.Types.Int -> configSource.getInt(name)?.let { converter.fromConfig(it) }
         ConfigType.Types.Boolean -> configSource.getBoolean(name)?.let { converter.fromConfig(it) }

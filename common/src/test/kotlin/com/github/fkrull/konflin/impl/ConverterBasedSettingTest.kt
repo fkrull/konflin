@@ -10,10 +10,8 @@ import kotlin.test.assertEquals
 private class MockConverter<SourceType : Any>(
     val expectedInput: SourceType,
     val output: String,
-    override val configType: ConfigType<SourceType>
+    override val inType: ConfigType<SourceType>
 ) : Converter<String, SourceType> {
-    override val clazz: KClass<String> = String::class
-
     override fun fromConfig(value: SourceType): String =
         if (value == expectedInput) output else "argument '$value' != expected value '$expectedInput'"
 }
