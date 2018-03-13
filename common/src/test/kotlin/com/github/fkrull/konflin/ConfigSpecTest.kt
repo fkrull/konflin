@@ -1,11 +1,28 @@
 package com.github.fkrull.konflin
 
+import com.github.fkrull.konflin.converter.ConfigType
+import com.github.fkrull.konflin.converter.Converter
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNull
+
+private data class TestType1(val value: String)
+private object TestConverter1 : Converter<TestType1, String> {
+    override val inType = ConfigType.Types.String
+    override val outType = TestType1::class
+    override fun fromConfig(value: String) = TestType1(value)
+}
+
+private data class TestType2(val value: String)
+private object TestConverter2 : Converter<TestType2, String> {
+    override val inType = ConfigType.Types.String
+    override val outType = TestType2::class
+    override fun fromConfig(value: String) = TestType2(value)
+}
 
 class ConfigSpecTest {
-    private val configSpec = object : ConfigSpec() {}
+    private val configSpec = object : ConfigSpec(TestConverter1, TestConverter2) {}
     private val configSource = MockConfigurationSource()
 
     @Test
@@ -42,9 +59,36 @@ class ConfigSpecTest {
     }
 
     @Test
+    fun should_set_null_for_default_if_not_specified() {
+        val setting = configSpec.setting<String>("test.name")
+
+        assertNull(setting.default)
+    }
+
+    @Test
     fun should_throw_exception_for_unsupported_type() {
         assertFailsWith(UnsupportedConfigTypeException::class) {
             configSpec.setting<Throwable>("test.name")
         }
+    }
+
+    @Test
+    fun should_create_Setting_for_first_custom_Converter() {
+        configSource.setString("test.name", "configured name")
+
+        val setting = configSpec.setting<TestType1>("test.name")
+
+        assertEquals("test.name", setting.name)
+        assertEquals(TestType1("configured name"), setting.get(configSource))
+    }
+
+    @Test
+    fun should_create_Setting_for_second_custom_Converter() {
+        configSource.setString("test.name", "configured name")
+
+        val setting = configSpec.setting<TestType2>("test.name")
+
+        assertEquals("test.name", setting.name)
+        assertEquals(TestType2("configured name"), setting.get(configSource))
     }
 }

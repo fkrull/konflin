@@ -10,24 +10,25 @@ import kotlin.reflect.KClass
 
 private infix fun <T : Any> T?.orElse(other: () -> T): T = this ?: other()
 
-abstract class ConfigSpec {
-    private companion object {
-        private val converters: Map<KClassId, Converter<*, *>> = mapOf(
-            String::class.id to IdentityConverter(ConfigType.Types.String),
-            Int::class.id to IdentityConverter(ConfigType.Types.Int),
-            Boolean::class.id to IdentityConverter(ConfigType.Types.Boolean)
-        )
-
-        @Suppress("UNCHECKED_CAST")
-        private fun <T : Any> getConverter(type: KClass<T>): Converter<T, Any>? = converters[type.id] as Converter<T, Any>?
-    }
-
+abstract class ConfigSpec(vararg additionalConverters: Converter<*, *>) {
     inline fun <reified T : Any> setting(name: String, defaultValue: T? = null): Setting<T> = setting(T::class, name, defaultValue)
 
     fun <T : Any> setting(type: KClass<T>, name: String, defaultValue: T? = null): Setting<T> = getConverter(type)
         .orElse { throw UnsupportedConfigTypeException("cannot use '$type' as config type") }
-        .let { createSetting(name, defaultValue, it) }
+        .let { ConverterBasedSetting(name, defaultValue, it) }
 
-    private fun <T : Any> createSetting(name: String, defaultValue: T?, converter: Converter<T, Any>) =
-        ConverterBasedSetting(name, defaultValue, converter)
+    private companion object {
+        private val DEFAULT_CONVERTERS: List<Converter<*, *>> = listOf(
+            IdentityConverter(ConfigType.Types.String),
+            IdentityConverter(ConfigType.Types.Int),
+            IdentityConverter(ConfigType.Types.Boolean)
+        )
+    }
+
+    private val converters: Map<KClassId, Converter<*, *>> = (DEFAULT_CONVERTERS + additionalConverters)
+        .map { converter -> converter.outType.id to converter }
+        .toMap()
+
+    @Suppress("UNCHECKED_CAST")
+    private fun <T : Any> getConverter(type: KClass<T>): Converter<T, Any>? = converters[type.id] as Converter<T, Any>?
 }

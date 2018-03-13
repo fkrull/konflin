@@ -2,7 +2,7 @@ package com.github.fkrull.konflin.converter
 
 import kotlin.reflect.KClass
 
-internal sealed class ConfigType<out Type : Any>(val clazz: KClass<out Type>) {
+sealed class ConfigType<out Type : Any>(val clazz: KClass<out Type>) {
     companion object Types {
         object String : ConfigType<kotlin.String>(kotlin.String::class)
         object Int : ConfigType<kotlin.Int>(kotlin.Int::class)

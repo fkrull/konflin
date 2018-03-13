@@ -4,7 +4,7 @@ import kotlin.reflect.KClass
 
 // Type parameter is not `out` for future extension of a `toConfig` method.
 @Suppress("AddVarianceModifier")
-internal interface Converter<OutType : Any, InType : Any> {
+interface Converter<OutType : Any, InType : Any> {
     val inType: ConfigType<InType>
     val outType: KClass<out OutType>
 

@@ -1,6 +1,16 @@
 package com.github.fkrull.konflin
 
+import com.github.fkrull.konflin.converter.ConfigType
+import com.github.fkrull.konflin.converter.Converter
 import kotlin.test.*
+
+private data class TestType(val value: String)
+
+private object TestConverter : Converter<TestType, String> {
+    override val inType = ConfigType.Types.String
+    override val outType = TestType::class
+    override fun fromConfig(value: String) = TestType(value)
+}
 
 class IntegrationTest {
     private val configSource = MockConfigurationSource()
@@ -107,8 +117,19 @@ class IntegrationTest {
         assertFailsWith(UnsupportedConfigTypeException::class) {
             object: ConfigSpec() {
                 @Suppress("unused")
-                val any = setting<Any>("test.any")
+                val testSetting = setting<TestType>("test.setting")
             }
         }
+    }
+
+    @Test
+    fun should_return_value_from_custom_Converter() {
+        val test = object: ConfigSpec(TestConverter) {
+            val name = setting<TestType>("test.name")
+        }
+        configSource.setString("test.name", "configured name")
+        val config = configuration(configSource)
+
+        assertEquals(TestType("configured name"), config[test.name])
     }
 }
