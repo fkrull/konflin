@@ -22,6 +22,8 @@ abstract class ConfigSpec {
         private fun <T : Any> getConverter(type: KClass<T>): Converter<T, Any>? = converters[type.id] as Converter<T, Any>?
     }
 
+    inline fun <reified T : Any> setting(name: String, defaultValue: T? = null): Setting<T> = setting(T::class, name, defaultValue)
+
     fun <T : Any> setting(type: KClass<T>, name: String, defaultValue: T? = null): Setting<T> = getConverter(type)
         .orElse { throw UnsupportedConfigTypeException("cannot use '$type' as config type") }
         .let { createSetting(name, defaultValue, it) }
@@ -29,7 +31,3 @@ abstract class ConfigSpec {
     private fun <T : Any> createSetting(name: String, defaultValue: T?, converter: Converter<T, Any>) =
         ConverterBasedSetting(name, defaultValue, converter)
 }
-
-inline fun <reified T : Any> ConfigSpec.setting(name: String, defaultValue: T? = null): Setting<T> =
-    setting(T::class, name, defaultValue)
-
