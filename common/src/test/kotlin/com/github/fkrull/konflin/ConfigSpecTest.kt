@@ -5,7 +5,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class ConfigSpecTest {
-    private val configSpec = object : ConfigSpec {}
+    private val configSpec = object : ConfigSpec() {}
     private val configSource = MockConfigurationSource()
 
     @Test

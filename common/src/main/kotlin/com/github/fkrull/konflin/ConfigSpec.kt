@@ -10,7 +10,7 @@ import kotlin.reflect.KClass
 
 private infix fun <T : Any> T?.orElse(other: () -> T): T = this ?: other()
 
-interface ConfigSpec {
+abstract class ConfigSpec {
     private companion object {
         private val converters: Map<KClassId, Converter<*, *>> = mapOf(
             String::class.id to IdentityConverter(ConfigType.Types.String),
