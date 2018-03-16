@@ -2,7 +2,9 @@ allprojects {
     group 'com.github.fkrull.konflin'
     version '1.0.0-SNAPSHOT'
 
-    ext.kotlin_version = '1.2.21'
+    ext.kotlin_version = '1.2.30'
+    ext.dokka_version = '0.9.16'
+    ext.docs_dir = "$rootDir/build/doc"
 
     repositories {
         mavenCentral()
@@ -10,14 +12,18 @@ allprojects {
 
     buildscript {
         repositories {
+            jcenter()
             mavenCentral()
         }
 
         dependencies {
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+            classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
         }
     }
 }
+
+task doc(dependsOn: ':konflin-jvm:dokka')
 
 subprojects {
     apply plugin: 'maven'
