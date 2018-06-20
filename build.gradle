@@ -1,5 +1,5 @@
 allprojects {
-    group 'io.github.fkrull.konflin'
+    group 'com.github.fkrull.konflin'
     version '1.0.0-SNAPSHOT'
 
     ext.kotlin_version = '1.2.50'
